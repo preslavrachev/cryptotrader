@@ -1,6 +1,7 @@
 package com.preslavrachev.cryptotrader.mvc.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseBody
 import remote.poloniex.service.PoloniexApiService
 import javax.inject.Inject
@@ -12,7 +13,7 @@ class DashboardController {
     @Inject
     lateinit var poloniexApiService: PoloniexApiService
 
-    @RequestMapping("hello")
+    @RequestMapping("hello", method = arrayOf(RequestMethod.GET))
     @ResponseBody
     fun hello(): PoloniexApiService.ChartDataEntryList {
         return poloniexApiService.getChartData()
