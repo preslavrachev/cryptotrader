@@ -18,4 +18,9 @@ class DashboardController {
         return poloniexApiService.getChartData()
     }
 
+    @RequestMapping("balances", method = arrayOf(RequestMethod.GET))
+    @ResponseBody
+    fun returnBalances(): Any {
+        return poloniexApiService.returnBalances()
+    }
 }
