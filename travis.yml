@@ -10,3 +10,4 @@ script:
   - echo $TRAVIS_BUILD_ID
   - echo $TRAVIS_BUILD_NUMBER
   - gradle test
+  
