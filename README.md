@@ -1,5 +1,7 @@
 # CryptoTrader
 
+![build status](https://travis-ci.org/preslavrachev/cryptotrader.svg?branch=master)
+
 CryptoTrader is a system for automating crypto-currency trading transactions, based on different signals and trading strategies.
 
 ### Why am I building it?
