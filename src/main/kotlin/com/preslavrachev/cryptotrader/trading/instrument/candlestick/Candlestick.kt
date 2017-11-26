@@ -43,4 +43,12 @@ data class Candlestick(
     fun isBodyTop(): Boolean {
         return bodyMidpoint() >= (MAX_HEIGHT_RATIO * shadowHeight())
     }
+
+    fun estimateBuyingPrice(): Float {
+        return Math.min(open, close)
+    }
+
+    fun estimateSellingPrice(): Float {
+        return Math.max(open, close)
+    }
 }

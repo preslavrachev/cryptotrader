@@ -24,7 +24,7 @@ class OrderListProcessorTest {
     fun setUp() {
         orderListProcessor = OrderListProcessor()
         orderListProcessor.tradingApi = DemoTradingService()
-        //orderListProcessor.postConstruct()
+        orderListProcessor.postConstruct()
     }
 
     @Test
