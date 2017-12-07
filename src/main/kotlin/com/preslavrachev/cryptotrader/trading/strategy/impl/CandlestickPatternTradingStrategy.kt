@@ -1,6 +1,5 @@
 package com.preslavrachev.cryptotrader.trading.strategy.impl
 
-import com.preslavrachev.cryptotrader.trading.instrument.candlestick.Candlestick
 import com.preslavrachev.cryptotrader.trading.instrument.candlestick.CandlestickPatternEnum
 import com.preslavrachev.cryptotrader.trading.instrument.timeline.TimelineContent
 import com.preslavrachev.cryptotrader.trading.instrument.timeline.TimelineNode
@@ -23,9 +22,7 @@ class CandlestickPatternTradingStrategy : TradingStrategy {
     override fun decide(timeline: List<TimelineNode<TimelineContent>>, balance: TradingStrategyBalance?, params: TradingStrategyParams?): output {
         assert(timeline.size >= 2) { LOGGER.warning("The input must have at least two data points!") }
 
-        @Suppress("UNCHECKED_CAST")
-        val candleSticks = timeline.filter { it.content is Candlestick } as List<TimelineNode<Candlestick>>
-
+        val candleSticks = timeline.determineCandleStickNodes()!!
         val prev = candleSticks[candleSticks.lastIndex - 1]
         val current = candleSticks[candleSticks.lastIndex]
 
