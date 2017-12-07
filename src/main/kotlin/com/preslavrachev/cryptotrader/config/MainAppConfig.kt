@@ -8,10 +8,11 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestTemplate
-import remote.poloniex.PackageMarker
 
 @Configuration
-@ComponentScan(basePackageClasses = arrayOf(PackageMarker::class))
+@ComponentScan(basePackageClasses = arrayOf(
+        remote.poloniex.PackageMarker::class,
+        com.preslavrachev.cryptotrader.trading.PackageMarker::class))
 class MainAppConfig {
 
     @Bean

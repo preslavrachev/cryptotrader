@@ -1,6 +1,7 @@
 package com.preslavrachev.cryptotrader.trading.instrument.suppress
 
 import com.preslavrachev.cryptotrader.trading.helper.PriceAndTimestamp
+import org.springframework.stereotype.Component
 
 /**
  * A helper data tuple class
@@ -17,6 +18,7 @@ private data class PriceSliceAndTimeScore(val price: Float, val slice: Int, val 
  * 3. The slice with the greatest level of "spreadiness" (the sum of all squared times) gets selected, and the average
  * price of all data points lying within it, gets returned.
  */
+@Component
 class SupportResistanceLevelEstimator {
 
     companion object {
