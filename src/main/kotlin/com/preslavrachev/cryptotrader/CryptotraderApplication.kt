@@ -58,7 +58,7 @@ class CryptotraderApplication {
                 .first()
 
         val strategy = CandlestickPatternTradingStrategy()
-        val decision = strategy.decide(lastPair)
+        val (decision) = strategy.decide(lastPair)
 
         LOGGER.info("Candlestick Pattern Strategy Decision: $decision -- time period $start/$end")
 

@@ -2,7 +2,12 @@ package com.preslavrachev.cryptotrader.trading.instrument.timeline
 
 import java.time.LocalDateTime
 
-data class TimelineNode<out T>(
+/**
+ * A convenience stereotype interface for easier implementation detection and casting
+ */
+interface TimelineContent
+
+data class TimelineNode<out TimelineContent>(
         val time: LocalDateTime,
-        val content: T
+        val content: TimelineContent
 )

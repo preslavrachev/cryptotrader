@@ -36,6 +36,9 @@ class CandlestickPatternTradingStrategyITest {
     fun setUp() {
     }
 
+    /**
+     * PLAN: This test needs to be revised to take the new trading strategy API into account
+     */
     @Ignore("Use this test manual evaluations only")
     @Test
     fun testDecisionPotential() {
@@ -46,7 +49,7 @@ class CandlestickPatternTradingStrategyITest {
         val pairs = chartData.toPairs()
         assertTrue(pairs.all { it.second.date - it.first.date == 300L })
 
-        val decisionsAndPrices = pairs.toDecisionsandPrices()
+        val decisionsAndPrices = pairs.toDecisionsAndPrices()
         print(decisionsAndPrices)
 
         val decisions = decisionsAndPrices.map { it.first }
@@ -84,7 +87,7 @@ class CandlestickPatternTradingStrategyITest {
                 " base currency: $baseCurrencyAmount | quote currency: $quoteCurrencyAmount")
     }
 
-    private fun List<Pair<ChartDataEntry, ChartDataEntry>>.toDecisionsandPrices(): List<Pair<TradingStrategyDecisionEnum, PriceAndTimstamp>> {
+    private fun List<Pair<ChartDataEntry, ChartDataEntry>>.toDecisionsAndPrices(): List<Pair<TradingStrategyDecisionEnum, PriceAndTimstamp>> {
         return this.map { (prev, current) ->
             listOf(
                     TimelineNode(prev.calculateLocalDateTime(), prev.toCandlestick()),
@@ -92,7 +95,7 @@ class CandlestickPatternTradingStrategyITest {
             )
         }
         .map {
-            val decision = strategy.decide(it)
+            val (decision) = strategy.decide(it)
             val currentCandlestick = it.last().content
             val price = currentCandlestick.close
             Pair(decision, PriceAndTimstamp(price, it.last().time.toUnixTimestamp()))

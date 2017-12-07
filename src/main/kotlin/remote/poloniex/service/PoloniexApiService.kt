@@ -23,7 +23,7 @@ class PoloniexApiService {
 
     class ChartDataEntryList: ArrayList<ChartDataEntry>()
 
-    enum class CurrencyPairEnum(val label: String) {
+    enum class CommonCurrencyPairsEnum(val label: String) {
         USDT_BTC  ("USDT_BTC"),
         BTC_ETH   ("BTC_ETH"),
         BTC_XRP   ("BTC_XRP"),
@@ -55,7 +55,7 @@ class PoloniexApiService {
     fun getChartData(start: Long, end: Long): ChartDataEntryList {
         val url = PUBLIC_URL_BUILDER
                 .queryParam(COMMAND_PARAM, CommandEnum.RETURN_CHART_DATA.label)
-                .queryParam(CURRENCY_PAIR_PARAM, CurrencyPairEnum.USDT_BTC)
+                .queryParam(CURRENCY_PAIR_PARAM, CommonCurrencyPairsEnum.USDT_BTC)
                 .queryParam(PERIOD_PARAM, 300)
                 .queryParam(START_PARAM, start)
                 .queryParam(END_PARAM, end)

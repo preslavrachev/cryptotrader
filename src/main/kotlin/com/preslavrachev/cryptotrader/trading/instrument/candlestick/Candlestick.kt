@@ -1,11 +1,13 @@
 package com.preslavrachev.cryptotrader.trading.instrument.candlestick
 
+import com.preslavrachev.cryptotrader.trading.instrument.timeline.TimelineContent
+
 data class Candlestick(
         val open: Float,
         val close: Float,
         val high: Float,
         val low: Float
-) {
+): TimelineContent {
     companion object {
         val MIN_HEIGHT_RATIO = 0.3
         val MAX_HEIGHT_RATIO = 0.7
