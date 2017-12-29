@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import remote.poloniex.model.ChartDataEntry
 import remote.poloniex.service.PoloniexApiService
+import remote.poloniex.service.PoloniexApiService.CurrencyPairEnum.*
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -41,7 +42,7 @@ class CandlestickPatternTradingStrategyITest {
     fun testDecisionPotential() {
         val end = LocalDateTime.now().toUnixTimestamp()
         val start = end.minusSecondPeriods(1000, 300)
-        val chartData = poloniexApiService.getChartData(start = start, end = end)
+        val chartData = poloniexApiService.getChartData(currencyPair = USDT_BTC.label, start = start, end = end)
 
         val pairs = chartData.toPairs()
         assertTrue(pairs.all { it.second.date - it.first.date == 300L })

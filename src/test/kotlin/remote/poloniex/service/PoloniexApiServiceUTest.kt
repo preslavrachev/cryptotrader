@@ -17,6 +17,7 @@ import org.mockito.MockitoAnnotations
 import org.springframework.http.ResponseEntity
 import org.springframework.util.ResourceUtils
 import org.springframework.web.client.RestTemplate
+import remote.poloniex.service.PoloniexApiService.CurrencyPairEnum.*
 import java.net.URI
 
 class PoloniexApiServiceUTest {
@@ -53,7 +54,7 @@ class PoloniexApiServiceUTest {
                 ArgumentMatchers.eq(PoloniexApiService.ChartDataEntryList::class.java)
         )).thenReturn(ResponseEntity.ok(chartDataResult))
 
-        val chartData = apiService.getChartData(1L, 1L)
+        val chartData = apiService.getChartData(currencyPair = USDT_BTC.label, start = 1L, end = 1L)
 
         assertThat(chartData.first(), equalTo(chartData.minBy { it.date }))
         assertThat(chartData.last(), equalTo(chartData.maxBy { it.date }))

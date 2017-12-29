@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.scheduling.annotation.Scheduled
 import remote.poloniex.model.ChartDataEntry
 import remote.poloniex.service.PoloniexApiService
+import remote.poloniex.service.PoloniexApiService.CurrencyPairEnum.*
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -45,7 +46,7 @@ class CryptotraderApplication {
     fun testStrategy() {
         val end = LocalDateTime.now().toUnixTimestamp()
         val start = end.minusSecondPeriods(5, 300)
-        val chartData = poloniexApiService.getChartData(start = start, end = end)
+        val chartData = poloniexApiService.getChartData(currencyPair = USDT_BTC.label, start = start, end = end)
         val leftSide = chartData.dropLast(1)
         val rightSide = chartData.drop(1)
         val lastPair = leftSide.zip(rightSide)

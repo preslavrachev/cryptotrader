@@ -14,6 +14,7 @@ import javax.inject.Inject
 
 @Service
 class PoloniexApiService {
+    // TODO: Consider renaming to PoloniexDataProvider
 
     @Value("\${api.poloniex.key}")
     lateinit var apiKey: String
@@ -52,19 +53,16 @@ class PoloniexApiService {
     @Inject
     lateinit var restTemplate: RestTemplate
 
-    fun getChartData(start: Long, end: Long): ChartDataEntryList {
+    fun getChartData(currencyPair:String, start: Long, end: Long): ChartDataEntryList {
         val url = PUBLIC_URL_BUILDER
                 .queryParam(COMMAND_PARAM, CommandEnum.RETURN_CHART_DATA.label)
-                .queryParam(CURRENCY_PAIR_PARAM, CurrencyPairEnum.USDT_BTC)
+                .queryParam(CURRENCY_PAIR_PARAM, currencyPair)
                 .queryParam(PERIOD_PARAM, 300)
                 .queryParam(START_PARAM, start)
                 .queryParam(END_PARAM, end)
                 .build()
 
         val response = restTemplate.getForEntity(url, ChartDataEntryList::class.java)
-
-        print(response.statusCode)
-
         return response.body
     }
 

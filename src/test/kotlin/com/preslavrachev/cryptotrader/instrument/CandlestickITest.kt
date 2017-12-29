@@ -11,6 +11,7 @@ import org.junit.runner.RunWith
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import remote.poloniex.service.PoloniexApiService
+import remote.poloniex.service.PoloniexApiService.CurrencyPairEnum.*
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class CandlestickITest {
     fun testCandlestickPatterns(): Unit {
         val end = LocalDateTime.now().toUnixTimestamp()
         val start = end.minusSecondPeriods(30, 300)
-        val chartData = poloniexApiService.getChartData(start = start, end = end)
+        val chartData = poloniexApiService.getChartData(currencyPair = USDT_BTC.label, start = start, end = end)
         val leftSide = chartData.dropLast(1)
         val rightSide = chartData.drop(1)
         val data = leftSide.zip(rightSide)
