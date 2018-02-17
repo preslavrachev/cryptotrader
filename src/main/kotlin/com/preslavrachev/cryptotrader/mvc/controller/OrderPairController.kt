@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonValue
 import com.preslavrachev.cryptotrader.mvc.controller.PairType.BUY_SELL
 import com.preslavrachev.cryptotrader.mvc.logic.OrderPairService
+import com.preslavrachev.cryptotrader.mvc.model.OrderScopeEnum
+import com.preslavrachev.cryptotrader.mvc.model.OrderScopeEnum.DEMO
 import org.springframework.web.bind.annotation.*
 
 enum class PairType(@JsonValue val id: Long) {
@@ -28,7 +30,12 @@ enum class PairType(@JsonValue val id: Long) {
     }
 }
 
-data class OrderPairWebRequest(val type: PairType = BUY_SELL, val quoteAmount: Float)
+// @formatter:off
+data class OrderPairWebRequest(
+        val quoteAmount: Float,
+        val type: PairType = BUY_SELL,
+        val scope: OrderScopeEnum = DEMO)
+// @formatter:on
 
 @RestController
 @RequestMapping("/orderPair")

@@ -9,5 +9,6 @@ data class Order(
         val baseCurrency: String, /* e.g. USDT in BTC/USDT */
         val executionDateTime: LocalDateTime = LocalDateTime.now(),
         var state: OrderStateEnum = OrderStateEnum.NEW,
-        val scope: OrderScopeEnum = OrderScopeEnum.DEMO
+        val scope: OrderScopeEnum = OrderScopeEnum.DEMO,
+        var predecessor: String? = null
 )

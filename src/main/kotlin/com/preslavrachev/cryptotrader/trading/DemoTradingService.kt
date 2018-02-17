@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class DemoTradingService: TradingManagement {
-    override fun placeOrder(order: Order): Boolean {
+    override fun placeOrder(order: Order): String? {
         TODO("not implemented")
     }
 }
