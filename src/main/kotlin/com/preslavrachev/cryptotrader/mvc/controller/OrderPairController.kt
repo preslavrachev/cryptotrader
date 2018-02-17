@@ -3,6 +3,7 @@ package com.preslavrachev.cryptotrader.mvc.controller
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonValue
 import com.preslavrachev.cryptotrader.mvc.controller.PairType.BUY_SELL
+import com.preslavrachev.cryptotrader.mvc.logic.OrderPairService
 import org.springframework.web.bind.annotation.*
 
 enum class PairType(@JsonValue val id: Long) {
@@ -31,10 +32,12 @@ data class OrderPairWebRequest(val type: PairType = BUY_SELL, val quoteAmount: F
 
 @RestController
 @RequestMapping("/orderPair")
-class OrderPairController {
+class OrderPairController(val service: OrderPairService) {
 
     @PostMapping("/{tickerPair}")
     fun placeOrderPair(@PathVariable(name = "tickerPair") tickerPair: String, @RequestBody request: OrderPairWebRequest): Any {
+
+        service.placeOrderPair(tickerPair, request)
         return request
     }
 

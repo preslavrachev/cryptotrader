@@ -23,7 +23,7 @@ class OrderListProcessorTest {
     @Before
     fun setUp() {
         orderListProcessor = OrderListProcessor()
-        orderListProcessor.tradingApi = DemoTradingService()
+        orderListProcessor.tradingManagement = DemoTradingService()
         orderListProcessor.postConstruct()
     }
 

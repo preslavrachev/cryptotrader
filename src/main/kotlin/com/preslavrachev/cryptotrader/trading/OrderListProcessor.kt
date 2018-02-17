@@ -3,7 +3,7 @@ package com.preslavrachev.cryptotrader.trading
 import com.preslavrachev.cryptotrader.mvc.model.Order
 import com.preslavrachev.cryptotrader.mvc.model.OrderStateEnum
 import com.preslavrachev.cryptotrader.session.AppSession
-import com.preslavrachev.cryptotrader.trading.api.TradingApi
+import com.preslavrachev.cryptotrader.trading.api.TradingManagement
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
@@ -25,7 +25,7 @@ class OrderListProcessor {
     lateinit var session: AppSession
 
     @Inject
-    lateinit var tradingApi: TradingApi
+    lateinit var tradingManagement: TradingManagement
 
     lateinit var orderProcessingPool: ForkJoinPool
 
@@ -49,7 +49,7 @@ class OrderListProcessor {
                 .onEach { it.apply { state = OrderStateEnum.PROCESSING } }
                 // TODO: replace the direct API service dependancy with an interface, or skip it altogether
                 // TODO: by using @Configurable
-                .map { OrderProcessorTask(it, tradingApi) }
+                .map { OrderProcessorTask(it, tradingManagement) }
                 .map {
                     Mono.fromCallable(it)
                             .subscribeOn(Schedulers.fromExecutor(orderProcessingPool))
