@@ -42,4 +42,3 @@ class OrderListProcessorTest {
         Assert.assertTrue(processedOrders.all { it.state == OrderStateEnum.DONE })
     }
 }
-

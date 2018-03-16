@@ -10,5 +10,6 @@ data class Order(
         val executionDateTime: LocalDateTime = LocalDateTime.now(),
         var state: OrderStateEnum = OrderStateEnum.NEW,
         val scope: OrderScopeEnum = OrderScopeEnum.DEMO,
+        var id: String? = null,
         var predecessor: String? = null
 )

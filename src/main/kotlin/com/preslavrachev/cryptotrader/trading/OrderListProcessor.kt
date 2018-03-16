@@ -2,7 +2,7 @@ package com.preslavrachev.cryptotrader.trading
 
 import com.preslavrachev.cryptotrader.mvc.model.Order
 import com.preslavrachev.cryptotrader.mvc.model.OrderStateEnum
-import com.preslavrachev.cryptotrader.session.AppSession
+import com.preslavrachev.cryptotrader.persistence.repository.OrderRepository
 import com.preslavrachev.cryptotrader.trading.api.TradingManagement
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -22,26 +22,30 @@ class OrderListProcessor {
     }
 
     @Inject
-    lateinit var session: AppSession
+    lateinit var tradingManagement: TradingManagement
 
     @Inject
-    lateinit var tradingManagement: TradingManagement
+    lateinit var orderRepository: OrderRepository
 
     lateinit var orderProcessingPool: ForkJoinPool
 
     @PostConstruct
-    fun postConstruct(): Unit {
+    fun postConstruct() {
         orderProcessingPool = ForkJoinPool(PARALLEL_TASK_COUNT)
     }
 
     @Scheduled(fixedRate = 100)
-    fun scheduleOrderProcessing(): Unit {
-        synchronized(session.orders) {
-            processOrders(session.orders).subscribe()
-        }
+    fun scheduleOrderProcessing() {
+        val newOrders = orderRepository.findAllByState(OrderStateEnum.NEW)
+        // @formatter:off
+        val newRelevantOrders = newOrders
+                .filter { it.predecessor != null && !newOrders.map { it.id }.contains(it.predecessor) }
+        // @formatter:on
+        processOrders(newRelevantOrders).subscribe()
     }
 
     internal fun processOrders(orders: List<Order>): Flux<Order> {
+        // @formatter:off
         return orders.asSequence()
                 .filter { OrderStateEnum.NEW == it.state }
                 .filter { it.executionDateTime <= LocalDateTime.now() }
@@ -58,5 +62,6 @@ class OrderListProcessor {
                             .flux()
                 }
                 .fold(Flux.empty()) { acc, flux -> acc.mergeWith(flux) }
+        // @formatter:on
     }
 }
