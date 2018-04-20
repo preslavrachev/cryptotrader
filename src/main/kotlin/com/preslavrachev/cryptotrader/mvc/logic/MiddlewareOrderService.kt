@@ -5,7 +5,7 @@ import com.preslavrachev.cryptotrader.persistence.repository.OrderRepository
 import org.springframework.stereotype.Service
 
 @Service
-class MiddlewareOrderService(val orderRepository: OrderRepository) {
+class MiddlewareOrderService(private val orderRepository: OrderRepository) {
 
     fun persist(order: Order): Order {
         return orderRepository.save(order)

@@ -7,13 +7,14 @@ import java.util.logging.Logger
 
 class OrderProcessingException(val order: Order) : RuntimeException()
 
-class OrderProcessorTask(val order: Order, val tradingManagement: TradingManagement) : Callable<Order> {
+class OrderProcessorTask(val order: Order, private val tradingManagement: TradingManagement) : Callable<Order> {
 
     companion object {
         val LOGGER = Logger.getLogger("OrderProcessorTask")
     }
 
     override fun call(): Order {
-        return order
+        LOGGER.info("Processing order")
+        return tradingManagement.placeOrder(order = order)
     }
 }

@@ -60,4 +60,5 @@ dependencies {
 	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 	testCompile('io.projectreactor:reactor-test')
 	testCompile('org.springframework.security:spring-security-test')
+	testCompile('org.assertj:assertj-core:3.9.0')
 }

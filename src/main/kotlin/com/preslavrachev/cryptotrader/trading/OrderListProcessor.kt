@@ -39,9 +39,11 @@ class OrderListProcessor {
         val newOrders = orderRepository.findAllByState(OrderStateEnum.NEW)
         // @formatter:off
         val newRelevantOrders = newOrders
-                .filter { it.predecessor != null && !newOrders.map { it.id }.contains(it.predecessor) }
+                .filter { it.predecessor == null || !newOrders.map { it.id }.contains(it.predecessor) }
         // @formatter:on
-        processOrders(newRelevantOrders).subscribe()
+        processOrders(newRelevantOrders)
+                .doOnEach { signal -> signal.get()?.let { orderRepository.save(it) } }
+                .subscribe()
     }
 
     internal fun processOrders(orders: List<Order>): Flux<Order> {
